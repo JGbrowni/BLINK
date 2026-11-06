@@ -1,0 +1,279 @@
+/* ==========================================================
+   Alejandro Mestizo · Portafolio
+   Liquid Glass sobre fondo negro con luces púrpura / verde
+   ========================================================== */
+
+:root {
+  --black: #000;
+  --purple: 148, 22, 206;      /* rgb para usar con alpha */
+  --magenta: 214, 52, 224;
+  --teal: 20, 200, 160;
+  --emerald: 16, 185, 129;
+  --pink: #ffd0fa;
+  --fade-out: 260ms;           /* fade-out + fade-in ≈ 560 ms */
+  --fade-in: 300ms;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--black);
+  color: #fff;
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 6px; }
+
+/* ---------- Fondo persistente ---------- */
+.bg {
+  position: fixed; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+  background: var(--black);
+}
+.blob, .glow { position: absolute; border-radius: 50%; will-change: transform; }
+
+/* Luz púrpura: esquina inferior izquierda */
+.blob--purple {
+  width: 95vmax; height: 95vmax; left: -47.5vmax; bottom: -47.5vmax;
+  background: radial-gradient(closest-side, rgba(var(--purple), .95), rgba(100, 10, 150, .55) 45%, transparent 100%);
+}
+/* Magenta más suave, a media altura del borde izquierdo */
+.blob--magenta {
+  width: 60vmax; height: 60vmax; left: -38vmax; top: 30%;
+  background: radial-gradient(closest-side, rgba(var(--magenta), .30), transparent 100%);
+}
+/* Luz turquesa/verde: esquina inferior derecha */
+.blob--teal {
+  width: 105vmax; height: 105vmax; right: -52.5vmax; bottom: -52.5vmax;
+  background: radial-gradient(closest-side, rgba(var(--teal), .95), rgba(6, 110, 88, .6) 45%, transparent 100%);
+}
+/* Luces que siguen al cursor (posicionadas por JS con transform) */
+.glow {
+  width: 620px; height: 620px; left: -310px; top: -310px;
+  opacity: 0; transition: opacity 600ms ease;
+}
+.glow--magenta { background: radial-gradient(closest-side, rgba(var(--magenta), .32), transparent 100%); }
+.glow--teal    { background: radial-gradient(closest-side, rgba(var(--teal), .26), transparent 100%); }
+.bg.is-live .glow { opacity: 1; }
+
+/* Móvil / táctil: sin seguimiento, deriva lenta y suave */
+@media not all and (hover: hover) and (pointer: fine) {
+  .glow { display: none; }
+  .blob--purple  { animation: drift 16s ease-in-out infinite alternate; }
+  .blob--teal    { animation: drift 20s ease-in-out infinite alternate-reverse; }
+  .blob--magenta { animation: drift 24s ease-in-out infinite alternate; }
+}
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(4vw, -5vh, 0) scale(1.08); }
+}
+
+/* ---------- Navbar ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; margin-inline: auto; width: max-content;
+  z-index: 50;
+  display: flex; align-items: center;
+  gap: clamp(.55rem, 2vw, 1.4rem);
+  max-width: calc(100vw - 12px);
+  padding: .7rem clamp(.8rem, 2.6vw, 1.9rem) .8rem;
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.16), rgba(255,255,255,.04) 38%, rgba(255,255,255,.07) 62%, rgba(255,255,255,.22)),
+    rgba(14, 14, 16, .55);
+  border: 1.5px solid rgba(255, 255, 255, .34);
+  border-top: 0;
+  border-radius: 0 0 22px 22px;
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,.28), 0 12px 30px rgba(0,0,0,.45);
+}
+.nav__brand { flex: none; display: block; }
+.nav__brand img { height: clamp(26px, 4.4vw, 34px); width: auto; }
+.nav__divider { width: 2px; height: clamp(30px, 5vw, 40px); background: #fff; border-radius: 2px; flex: none; }
+.nav__links { display: flex; align-items: center; gap: clamp(.1rem, 1.2vw, .6rem); }
+.nav__link {
+  position: relative;
+  padding: .5rem clamp(.3rem, 1.2vw, .85rem);
+  font-size: clamp(.62rem, 2.5vw, .98rem);
+  font-weight: 400; letter-spacing: .01em; text-transform: uppercase;
+  white-space: nowrap;
+  opacity: .78; transition: opacity .25s ease;
+}
+.nav__link:hover { opacity: 1; }
+.nav__link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: #fff; border-radius: 2px;
+  transform: scaleX(0); transition: transform .3s var(--ease);
+}
+.nav__link[aria-current="page"] { opacity: 1; }
+.nav__link[aria-current="page"]::after { transform: scaleX(1); }
+
+/* ---------- Aviso "Próximamente" ---------- */
+.toast {
+  position: fixed; top: 82px; left: 50%; z-index: 60;
+  padding: .55rem 1.1rem; border-radius: 999px;
+  font-size: .85rem; font-weight: 500; white-space: nowrap;
+  background: rgba(20, 20, 24, .7); border: 1px solid rgba(255,255,255,.25);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  opacity: 0; transform: translate(-50%, -6px);
+  transition: opacity .25s ease, transform .25s var(--ease);
+  pointer-events: none;
+}
+.toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Contenedor de secciones ---------- */
+.stage { position: relative; z-index: 1; }
+
+.view {
+  min-height: 100vh; min-height: 100svh;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity var(--fade-out) ease, transform var(--fade-out) ease;
+}
+.view[hidden] { display: none; }
+.view.is-visible { opacity: 1; transform: none; transition-duration: var(--fade-in); }
+
+/* ---------- INICIO · BLINK ---------- */
+.view--home {
+  display: flex; align-items: center; justify-content: center;
+  padding: 4.5rem 1rem 1.5rem;
+}
+.view--home[hidden] { display: none; }
+
+.blink {
+  display: flex;
+  font-size: clamp(4.5rem, 23vw, 20rem);
+  font-weight: 800; line-height: 1; letter-spacing: -.02em;
+  user-select: none;
+}
+/* Cada letra recorre el degradado rosa → blanco → esmeralda con distinta fase */
+.blink span {
+  display: inline-block;
+  background: linear-gradient(115deg, #fff 0%, #fff 22%, var(--pink) 36%, #fff 50%, #9be8c8 68%, #10b981 84%, #047857 100%);
+  background-size: 320% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: shimmer 10s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * -1.4s);
+}
+@keyframes shimmer {
+  from { background-position: 0% 0; }
+  to   { background-position: 100% 0; }
+}
+
+/* ---------- SOBRE MI ---------- */
+.view--about {
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(6.5rem, 13vh, 8.5rem) clamp(1.25rem, 5vw, 6rem) 3rem;
+}
+.about {
+  width: 100%; max-width: 1400px;
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center; gap: clamp(2rem, 5vw, 5rem);
+}
+
+/* Retrato en capas de cristal */
+.portrait {
+  position: relative; width: min(100%, 440px); aspect-ratio: 3 / 4; justify-self: center;
+}
+.portrait__layer {
+  position: absolute; border-radius: 36px;
+  background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+}
+.portrait__layer--back  { inset: 0; transform: translate(-10%, -6%) rotate(-8deg) scale(1.02); }
+.portrait__layer--small { width: 42%; height: 42%; left: -12%; bottom: -5%; transform: rotate(9deg); border-radius: 28px; }
+
+.portrait__card {
+  position: relative; width: 100%; height: 100%;
+  border-radius: 32px; overflow: hidden;
+  box-shadow: 0 0 36px rgba(168, 85, 247, .45), 0 0 80px rgba(34, 211, 238, .22);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.portrait__card img { width: 100%; height: 100%; object-fit: cover; }
+/* Borde degradado púrpura → cian */
+.portrait__card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
+  background: linear-gradient(135deg, #c4a0ff, #8ab4ff 55%, #67e8f9);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Información */
+.info { min-width: 0; }
+.info__name {
+  font-size: clamp(2.1rem, 4.4vw, 4.2rem);
+  font-weight: 600; line-height: 1.1; letter-spacing: -.02em;
+}
+.info__bio {
+  margin-top: 1.4rem; max-width: 66ch;
+  font-size: clamp(.95rem, 1.35vw, 1.3rem);
+  font-weight: 300; line-height: 1.55;
+  color: rgba(255,255,255,.93);
+}
+.info__title {
+  margin-top: clamp(1.6rem, 3.2vw, 2.4rem);
+  font-size: clamp(1.4rem, 2.5vw, 2.1rem);
+  font-weight: 600; letter-spacing: -.01em;
+}
+
+/* Tarjetas de software (sin backdrop-filter para cuidar el rendimiento) */
+.software { display: flex; flex-wrap: wrap; gap: clamp(.5rem, .9vw, .8rem); margin-top: 1rem; }
+.chip {
+  display: grid; place-items: center;
+  min-width: clamp(54px, 4.6vw, 76px); height: clamp(54px, 4.6vw, 76px);
+  padding: 0 .6rem;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,.04) 60%, rgba(255,255,255,.08));
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 8px 18px rgba(0,0,0,.28);
+  transition: transform .25s var(--ease), border-color .25s ease;
+}
+.chip:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.4); }
+.chip--wide { min-width: clamp(72px, 6.2vw, 98px); }
+.chip__txt { font-size: clamp(1.35rem, 2.3vw, 1.9rem); font-weight: 700; }
+.chip__ico { font-size: clamp(1.5rem, 2.6vw, 2.1rem); }
+.chip__canva { font-size: clamp(1.05rem, 1.8vw, 1.45rem); font-weight: 600; font-style: italic; letter-spacing: -.02em; }
+.chip__svg { width: clamp(26px, 3.2vw, 36px); height: auto; }
+
+/* Experiencia */
+.jobs { margin-top: .9rem; display: grid; gap: 1.1rem; padding-left: .35rem; }
+.job__role { font-size: clamp(1rem, 1.5vw, 1.3rem); font-weight: 700; }
+.job__meta { margin-top: .15rem; font-size: clamp(.9rem, 1.4vw, 1.25rem); font-weight: 300; color: rgba(255,255,255,.88); }
+.job__company { font-weight: 400; }
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  .about { grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); gap: 2rem; }
+  .portrait { width: min(100%, 340px); }
+}
+
+/* ---------- Móvil: About apilado ---------- */
+@media (max-width: 760px) {
+  .view--about { align-items: flex-start; padding-top: 6rem; }
+  .about { grid-template-columns: minmax(0, 1fr); gap: 2.4rem; }
+  .portrait { width: min(74%, 320px); margin-top: .5rem; }
+  .portrait__layer--back { transform: translate(-8%, -5%) rotate(-7deg) scale(1.02); }
+  .info__bio { max-width: none; }
+}
+
+/* ---------- Accesibilidad: menos movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  .blink span { background-position: calc(var(--i) * 22%) 0; }
+}

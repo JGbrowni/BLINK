@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alejandro Mestizo | Portafolio</title>
+  <meta name="description" content="Portafolio de Alejandro Mestizo, estudiante de Diseño Gráfico Web y Multimedia.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <noscript><style>.view{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+
+  <!-- Fondo persistente: vive fuera de las secciones, nunca se recarga -->
+  <div class="bg" aria-hidden="true">
+    <div class="blob blob--purple" data-parallax="-0.025"></div>
+    <div class="blob blob--magenta" data-parallax="-0.015"></div>
+    <div class="blob blob--teal" data-parallax="0.025"></div>
+    <div class="glow glow--magenta"></div>
+    <div class="glow glow--teal"></div>
+  </div>
+
+  <!-- Navbar persistente -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#inicio" data-view="inicio" aria-label="Ir a inicio">
+      <img src="assets/logo-ac.webp" alt="AC" width="91" height="50">
+    </a>
+    <span class="nav__divider" aria-hidden="true"></span>
+    <nav class="nav__links" aria-label="Principal">
+      <a class="nav__link" href="#inicio" data-view="inicio" aria-current="page">Inicio</a>
+      <a class="nav__link" href="#sobre-mi" data-view="sobre-mi">Sobre mi</a>
+      <a class="nav__link" href="#trabajos" data-view="trabajos" data-soon>Trabajos</a>
+      <a class="nav__link" href="#contacto" data-view="contacto" data-soon>Contacto</a>
+    </nav>
+  </header>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <i class="fa-regular fa-clock" aria-hidden="true"></i> Próximamente
+  </div>
+
+  <!-- Solo esta zona cambia al navegar -->
+  <main class="stage">
+
+    <!-- INICIO -->
+    <section class="view view--home" id="view-inicio" aria-label="Inicio">
+      <h1 class="blink" aria-label="BLINK">
+        <span aria-hidden="true" style="--i:0">B</span><span aria-hidden="true" style="--i:1">L</span><span aria-hidden="true" style="--i:2">I</span><span aria-hidden="true" style="--i:3">N</span><span aria-hidden="true" style="--i:4">K</span>
+      </h1>
+    </section>
+
+    <!-- SOBRE MI -->
+    <section class="view view--about" id="view-sobre-mi" aria-label="Sobre mi" hidden>
+      <div class="about">
+
+        <div class="portrait">
+          <span class="portrait__layer portrait__layer--back"></span>
+          <span class="portrait__layer portrait__layer--small"></span>
+          <div class="portrait__card">
+            <img src="assets/alejandro.webp" alt="Retrato de Alejandro Mestizo" width="440" height="589">
+          </div>
+        </div>
+
+        <div class="info">
+          <h2 class="info__name">Alejandro Mestizo</h2>
+          <p class="info__bio">Soy estudiante a egresar de la carrera Licenciatura en Diseño Gráfico Web y Multimedia. Poseo experiencia en diseño digital, redes sociales y edición multimedia básica. También poseo conocimientos de diseño UX/UI para ponerlos en práctica y desarrollarlos.</p>
+
+          <h3 class="info__title">Software</h3>
+          <ul class="software">
+            <li class="chip" title="Adobe Illustrator"><span class="chip__txt" aria-hidden="true">Ai</span><span class="sr-only">Adobe Illustrator</span></li>
+            <li class="chip" title="Adobe Photoshop"><span class="chip__txt" aria-hidden="true">Ps</span><span class="sr-only">Adobe Photoshop</span></li>
+            <li class="chip" title="Adobe Lightroom"><span class="chip__txt" aria-hidden="true">Lr</span><span class="sr-only">Adobe Lightroom</span></li>
+            <li class="chip" title="Adobe After Effects"><span class="chip__txt" aria-hidden="true">Ae</span><span class="sr-only">Adobe After Effects</span></li>
+            <li class="chip" title="Figma"><svg class="chip__svg" viewBox="3 0 24 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M9 2h3v6H9a3 3 0 0 1 0-6zM12 2h3a3 3 0 0 1 0 6h-3zM9 8h3v6H9a3 3 0 0 1 0-6zM9 14h3v3a3 3 0 1 1-3-3z"/><circle cx="15" cy="11" r="3"/></svg><span class="sr-only">Figma</span></li>
+            <li class="chip chip--wide" title="Canva"><span class="chip__canva" aria-hidden="true">Canva</span><span class="sr-only">Canva</span></li>
+            <!-- CapCut y Figma: SVG en línea (sin depender de la CDN) -->
+            <li class="chip" title="CapCut">
+              <svg class="chip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5h7.5l5 11h6.5M2.5 17.5h7.5l5-11h6.5"/></svg>
+              <span class="sr-only">CapCut</span>
+            </li>
+            <!-- Meta: símbolo de infinito en SVG -->
+            <li class="chip" title="Meta">
+              <svg class="chip__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12c-2-3-3.8-5.2-6-5.2a5.2 5.2 0 0 0 0 10.4c2.2 0 4-2.2 6-5.2s3.8-5.2 6-5.2a5.2 5.2 0 0 1 0 10.4c-2.2 0-4-2.2-6-5.2z"/></svg>
+              <span class="sr-only">Meta</span>
+            </li>
+          </ul>
+
+          <h3 class="info__title">Experiencia en el área</h3>
+          <ul class="jobs">
+            <li class="job">
+              <p class="job__role">Pasante de diseñador gráfico</p>
+              <p class="job__meta"><span class="job__company">Banco Agrícola</span> | Junio 2025 - Septiembre 2025</p>
+            </li>
+            <li class="job">
+              <p class="job__role">Diseñador gráfico jr</p>
+              <p class="job__meta"><span class="job__company">Focus Services</span> | Marzo 2023 - Septiembre 2024</p>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/javascript.js"></script>
+</body>
+</html>
