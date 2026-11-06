@@ -257,6 +257,100 @@ img { display: block; max-width: 100%; }
 .job__meta { margin-top: .15rem; font-size: clamp(.9rem, 1.4vw, 1.25rem); font-weight: 300; color: rgba(255,255,255,.88); }
 .job__company { font-weight: 400; }
 
+/* ---------- TRABAJOS ---------- */
+.view--works {
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: clamp(6.5rem, 13vh, 8.5rem) clamp(1rem, 4vw, 4rem) 4rem;
+}
+.works { width: 100%; max-width: 1280px; }
+
+/* Contenedor de cristal grande (un solo backdrop-filter para toda la galería) */
+.works__panel {
+  padding: clamp(1.1rem, 3.5vw, 3rem);
+  border-radius: clamp(24px, 3vw, 40px);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.035) 45%, rgba(255,255,255,.07)),
+    rgba(10, 10, 14, .38);
+  border: 1px solid rgba(255, 255, 255, .22);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 40px rgba(255,255,255,.03), 0 24px 60px rgba(0,0,0,.4);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  backdrop-filter: blur(12px) saturate(130%);
+}
+.works__group + .works__group { margin-top: clamp(3rem, 7vw, 5.5rem); }
+.works__title {
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700; line-height: 1.1; letter-spacing: -.02em;
+}
+
+/* Cuadrícula que se reajusta sola: las columnas aparecen o desaparecen según el ancho */
+.gallery {
+  --min: 230px;                       /* móvil pequeño: 1 columna legible */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
+  align-items: center;
+  gap: clamp(.9rem, 2.2vw, 1.8rem);
+  margin-top: clamp(1.4rem, 3vw, 2.4rem);
+}
+@media (min-width: 480px)  { .gallery { --min: 170px; } }   /* móvil grande: 2 columnas */
+@media (min-width: 1024px) { .gallery { --min: 250px; } }   /* escritorio: 3-4 columnas */
+
+.work { list-style: none; min-width: 0; width: 100%; max-width: var(--max, 340px); justify-self: center; }
+/* Marco consistente; la obra se muestra completa (contain), centrada y sin deformar */
+.work__link {
+  --ratio: 3 / 4;
+  --pad: clamp(.5rem, 1.1vw, .85rem);
+  position: relative; display: block;
+  aspect-ratio: var(--ratio);
+  border-radius: 22px; overflow: hidden;
+  background: linear-gradient(160deg, rgba(255,255,255,.14), rgba(255,255,255,.04) 60%, rgba(255,255,255,.08));
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 10px 24px rgba(0,0,0,.3);
+  cursor: zoom-in;
+}
+/* Orientación detectada por script.js según el tamaño real de la imagen */
+.work--landscape .work__link { --ratio: 4 / 3; }
+.work--square    .work__link { --ratio: 1 / 1; }
+
+.work__link img {
+  position: absolute; inset: var(--pad);
+  width: calc(100% - 2 * var(--pad)); height: calc(100% - 2 * var(--pad));
+  object-fit: contain; border-radius: 12px;
+  transition: transform .35s var(--ease), filter .35s ease;
+}
+/* Capa de hover: brillo suave + lupa (solo opacity/transform; sin filtros costosos) */
+.card-hover-overlay {
+  position: absolute; inset: 0; pointer-events: none;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.16), rgba(255,255,255,.04) 70%);
+  opacity: 0; transition: opacity .3s ease;
+}
+.card-hover-overlay::after {
+  content: "+"; display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  font-size: 1.7rem; font-weight: 300; line-height: 1; color: #fff;
+  background: rgba(20, 20, 26, .55); border: 1px solid rgba(255,255,255,.4);
+  transform: scale(.85); transition: transform .3s var(--ease);
+}
+@media (hover: hover) {
+  .work__link:hover img { transform: scale(1.03); }
+  .work__link:hover .card-hover-overlay { opacity: 1; }
+  .work__link:hover .card-hover-overlay::after { transform: scale(1); }
+}
+.work__link:focus-visible { outline-offset: 3px; }
+.work__link:focus-visible img { transform: scale(1.03); }
+.work__link:focus-visible .card-hover-overlay { opacity: 1; }
+.work__link:focus-visible .card-hover-overlay::after { transform: scale(1); }
+
+/* ---------- Lightbox: ajustes visuales desde el CSS propio (los archivos originales no se tocan) ---------- */
+.lightboxOverlay { background-color: #000; opacity: .88 !important; }
+.lightbox, .lightbox .lb-data { font-family: 'Poppins', system-ui, sans-serif; }
+.lightbox .lb-outerContainer { background-color: rgba(22, 22, 28, .92); border-radius: 18px; box-shadow: 0 0 60px rgba(148, 22, 206, .25), 0 0 90px rgba(20, 200, 160, .15); }
+.lightbox .lb-image { border: 1px solid rgba(255,255,255,.3); border-radius: 14px; }
+.lightbox .lb-close { opacity: .85; }
+.lightbox .lb-close:focus-visible, .lightbox .lb-prev:focus-visible, .lightbox .lb-next:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
+@media (hover: none) { .lb-nav a.lb-prev, .lb-nav a.lb-next { opacity: .85; } }  /* flechas visibles en táctil */
+
 /* ---------- Tablet ---------- */
 @media (max-width: 1024px) {
   .about { grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); gap: 2rem; }

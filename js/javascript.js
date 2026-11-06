@@ -2,6 +2,7 @@
    Alejandro Mestizo · Portafolio
    1) Luz de fondo que sigue al cursor (rAF + interpolación)
    2) Navegación de página única con transiciones
+   3) Galería de TRABAJOS + integración del Lightbox original
    ========================================================== */
 (() => {
   'use strict';
@@ -75,7 +76,8 @@
 
   const views = {
     'inicio':   $('#view-inicio'),
-    'sobre-mi': $('#view-sobre-mi')
+    'sobre-mi': $('#view-sobre-mi'),
+    'trabajos': $('#view-trabajos')
   };
   const links = $$('.nav__link');
   const toast = $('#toast');
@@ -136,4 +138,67 @@
   Object.entries(views).forEach(([name, el]) => { el.hidden = name !== current; });
   setActive(current);
   requestAnimationFrame(() => views[current].classList.add('is-visible'));
+
+  /* ---------- 3. Galería de TRABAJOS + Lightbox ---------- */
+  // Las miniaturas son enlaces <a data-lightbox="grupo"> que el Lightbox original ya detecta solo.
+  // Aquí solo se configura con sus opciones oficiales y se ajustan detalles de la galería.
+  const works = $('#view-trabajos');
+
+  // Orientación: el marco se adapta a cada obra (vertical / cuadrada / horizontal)
+  const classify = (img) => {
+    if (!img.naturalWidth) return;
+    const r = img.naturalWidth / img.naturalHeight;
+    const li = img.closest('.work');
+    li.classList.toggle('work--landscape', r > 1.2);
+    li.classList.toggle('work--square', r >= 0.9 && r <= 1.2);
+  };
+  // 'load' y 'error' no burbujean: se escuchan en fase de captura (cubre también el lazy-loading)
+  works.addEventListener('load', (e) => { if (e.target.tagName === 'IMG') classify(e.target); }, true);
+  // Si falta la miniatura, se usa la imagen original como respaldo
+  works.addEventListener('error', (e) => {
+    const img = e.target;
+    if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+    img.dataset.fallback = '1';
+    img.src = img.closest('a').getAttribute('href');
+  }, true);
+  $$('img', works).forEach(img => { if (img.complete) classify(img); });
+
+  // Opciones oficiales de Lightbox2 (sin tocar sus archivos)
+  const lb = window.lightbox;
+  if (lb) {
+    lb.option({
+      albumLabel: 'Imagen %1 de %2',
+      wrapAround: true,
+      disableScrolling: true,     // bloquea el scroll del fondo mientras está abierto
+      positionFromTop: 40,
+      fadeDuration: reduceMotion.matches ? 0 : 300,
+      imageFadeDuration: reduceMotion.matches ? 0 : 300,
+      resizeDuration: reduceMotion.matches ? 0 : 400
+    });
+
+    // El Lightbox crea su HTML cuando jQuery está listo (después de este script),
+    // así que las etiquetas accesibles se aplican en ese momento.
+    window.jQuery(() => {
+    const box = $('#lightbox');
+    if (box) {
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.setAttribute('aria-label', 'Vista ampliada del proyecto');
+      $('.lb-close', box)?.setAttribute('aria-label', 'Cerrar');
+      $('.lb-cancel', box)?.setAttribute('aria-label', 'Cancelar carga');
+      $('.lb-prev', box)?.setAttribute('aria-label', 'Imagen anterior');
+      $('.lb-next', box)?.setAttribute('aria-label', 'Imagen siguiente');
+    }
+
+    // Al cerrar, devolver el foco a la miniatura que se abrió
+    let lastLink = null;
+    works.addEventListener('click', (e) => { lastLink = e.target.closest('a[data-lightbox]') || lastLink; });
+    const overlay = $('#lightboxOverlay');
+    if (overlay) {
+      new MutationObserver(() => {
+        if (overlay.style.display === 'none' && lastLink) { lastLink.focus({ preventScroll: true }); lastLink = null; }
+      }).observe(overlay, { attributes: true, attributeFilter: ['style'] });
+    }
+    });
+  }
 })();

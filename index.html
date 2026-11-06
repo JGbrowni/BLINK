@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="lightbox.css">   <!-- Lightbox original, sin modificar -->
   <link rel="stylesheet" href="css/style.css">
   <noscript><style>.view{opacity:1!important;transform:none!important}</style></noscript>
 </head>
@@ -35,7 +36,7 @@
     <nav class="nav__links" aria-label="Principal">
       <a class="nav__link" href="#inicio" data-view="inicio" aria-current="page">Inicio</a>
       <a class="nav__link" href="#sobre-mi" data-view="sobre-mi">Sobre mi</a>
-      <a class="nav__link" href="#trabajos" data-view="trabajos" data-soon>Trabajos</a>
+      <a class="nav__link" href="#trabajos" data-view="trabajos">Trabajos</a>
       <a class="nav__link" href="#contacto" data-view="contacto" data-soon>Contacto</a>
     </nav>
   </header>
@@ -106,8 +107,76 @@
       </div>
     </section>
 
+
+    <!-- TRABAJOS -->
+    <section class="view view--works" id="view-trabajos" aria-label="Trabajos" hidden>
+      <div class="works">
+      <!--
+        CÓMO AGREGAR UN PROYECTO: copia un bloque <li class="work"> dentro del <ul class="gallery"> que quieras.
+          · href          = imagen original completa (assets/projects/archivo.png|jpg). Es la que abre el Lightbox.
+          · src           = miniatura ligera (assets/projects/thumbs/archivo.webp, con tools/make-thumbs.py).
+                            También puede ser otra imagen tuya (p. ej. gas.png) si ya tienes miniaturas aparte.
+          · data-lightbox = nombre del grupo; las imágenes con el mismo nombre se navegan con ← → en el Lightbox.
+          · alt           = nombre del trabajo.
+          · <div class="card-hover-overlay"> = capa de brillo al pasar el cursor (déjala igual en todos).
+        La cuadrícula se reajusta sola; no hace falta tocar el CSS.
+      -->
+      <div class="works__panel">
+
+      <section class="works__group" aria-labelledby="g-editorial">
+        <h2 class="works__title" id="g-editorial">Editorial</h2>
+        <ul class="gallery">
+          <li class="work">
+            <a class="work__link" href="imgs/editorial/afiche.jpg" data-lightbox="editorial" aria-label="Ampliar Proyecto 01">
+              <img src="imgs/editorial/afiche.jpg" alt="Proyecto 01" loading="lazy" decoding="async">
+              <div class="card-hover-overlay" aria-hidden="true"></div>
+            </a>
+          </li>
+          <li class="work">
+            <a class="work__link" href="imgs/editorial/Wellbeing Family Planning Brochure.png" data-lightbox="editorial" aria-label="Ampliar Proyecto 02">
+              <img src="imgs/editorial/Wellbeing Family Planning Brochure.png" alt="Proyecto 02" loading="lazy" decoding="async">
+              <div class="card-hover-overlay" aria-hidden="true"></div>
+            </a>
+          </li>
+          <li class="work">
+            <a class="work__link" href="imgs/editorial/Wellbeing PH - Leukemia.png" data-lightbox="editorial" aria-label="Ampliar Proyecto 03">
+              <img src="imgs/editorial/Wellbeing PH - Leukemia.png" alt="Proyecto 03" loading="lazy" decoding="async">
+              <div class="card-hover-overlay" aria-hidden="true"></div>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="works__group" aria-labelledby="g-redes">
+        <h2 class="works__title" id="g-redes">Redes sociales</h2>
+        <ul class="gallery">
+          <li class="work">
+            <a class="work__link" href="assets/projects/project-01.png" data-lightbox="redes" aria-label="Ampliar Proyecto 01">
+              <img src="assets/projects/thumbs/project-01.webp" alt="Proyecto 01" loading="lazy" decoding="async">
+              <div class="card-hover-overlay" aria-hidden="true"></div>
+            </a>
+          </li>
+          <li class="work">
+            <a class="work__link" href="assets/projects/project-02.png" data-lightbox="redes" aria-label="Ampliar Proyecto 02">
+              <img src="assets/projects/thumbs/project-02.webp" alt="Proyecto 02" loading="lazy" decoding="async">
+              <div class="card-hover-overlay" aria-hidden="true"></div>
+            </a>
+          </li>
+          <li class="work">
+            <a class="work__link" href="assets/projects/project-03.png" data-lightbox="redes" aria-label="Ampliar Proyecto 03">
+              <img src="assets/projects/thumbs/project-03.webp" alt="Proyecto 03" loading="lazy" decoding="async">
+              <div class="card-hover-overlay" aria-hidden="true"></div>
+            </a>
+          </li>
+        </ul>
+      </section>
+      </div>
+      </div>
+    </section>
+
   </main>
 
-  <script src="js/javascript.js"></script>
+  <script defer src="lightbox-plus-jquery.js"></script>   <!-- jQuery + Lightbox2 originales, sin modificar -->
+  <script defer src="js/javascript.js"></script>
 </body>
 </html>
