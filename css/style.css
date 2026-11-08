@@ -395,29 +395,20 @@ img { display: block; max-width: 100%; }
   object-fit: contain; border-radius: 12px;
   transition: transform .35s var(--ease), filter .35s ease;
 }
-/* Capa de hover: brillo suave + lupa (solo opacity/transform; sin filtros costosos) */
+/* Capa de hover: brillo suave (solo opacity/transform; sin filtros costosos) */
 .card-hover-overlay {
   position: absolute; inset: 0; pointer-events: none;
   display: grid; place-items: center;
   background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.16), rgba(255,255,255,.04) 70%);
   opacity: 0; transition: opacity .3s ease;
 }
-.card-hover-overlay::after {
-  content: "+"; display: grid; place-items: center;
-  width: 46px; height: 46px; border-radius: 50%;
-  font-size: 1.7rem; font-weight: 300; line-height: 1; color: #fff;
-  background: rgba(20, 20, 26, .55); border: 1px solid rgba(255,255,255,.4);
-  transform: scale(.85); transition: transform .3s var(--ease);
-}
 @media (hover: hover) {
   .work__link:hover img { transform: scale(1.03); }
   .work__link:hover .card-hover-overlay { opacity: 1; }
-  .work__link:hover .card-hover-overlay::after { transform: scale(1); }
 }
 .work__link:focus-visible { outline-offset: 3px; }
 .work__link:focus-visible img { transform: scale(1.03); }
 .work__link:focus-visible .card-hover-overlay { opacity: 1; }
-.work__link:focus-visible .card-hover-overlay::after { transform: scale(1); }
 
 /* ---------- Lightbox: ajustes visuales desde el CSS propio (los archivos originales no se tocan) ---------- */
 .lightboxOverlay { background-color: #000; opacity: .88 !important; }
