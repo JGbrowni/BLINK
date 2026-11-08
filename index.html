@@ -63,7 +63,7 @@
           <span class="portrait__layer portrait__layer--back"></span>
           <span class="portrait__layer portrait__layer--small"></span>
           <div class="portrait__card">
-            <img src="assets/alejandro.webp" alt="Retrato de Alejandro Mestizo" width="440" height="589">
+            <img src="imgs/mestixo.png" alt="Retrato de Alejandro Mestizo" width="440" height="589">
           </div>
         </div>
 
@@ -149,26 +149,100 @@
 
       <section class="works__group" aria-labelledby="g-redes">
         <h2 class="works__title" id="g-redes">Redes sociales</h2>
-        <ul class="gallery">
-          <li class="work">
-            <a class="work__link" href="assets/projects/project-01.png" data-lightbox="redes" aria-label="Ampliar Proyecto 01">
-              <img src="assets/projects/thumbs/project-01.webp" alt="Proyecto 01" loading="lazy" decoding="async">
-              <div class="card-hover-overlay" aria-hidden="true"></div>
-            </a>
-          </li>
-          <li class="work">
-            <a class="work__link" href="assets/projects/project-02.png" data-lightbox="redes" aria-label="Ampliar Proyecto 02">
-              <img src="assets/projects/thumbs/project-02.webp" alt="Proyecto 02" loading="lazy" decoding="async">
-              <div class="card-hover-overlay" aria-hidden="true"></div>
-            </a>
-          </li>
-          <li class="work">
-            <a class="work__link" href="assets/projects/project-03.png" data-lightbox="redes" aria-label="Ampliar Proyecto 03">
-              <img src="assets/projects/thumbs/project-03.webp" alt="Proyecto 03" loading="lazy" decoding="async">
-              <div class="card-hover-overlay" aria-hidden="true"></div>
-            </a>
-          </li>
-        </ul>
+
+        <!--
+          BLOQUE DE MARCA. Para agregar otra marca, copia el <article class="brand"> completo debajo de este
+          y cambia: el nombre, la explicación, el id/aria-labelledby y el data-lightbox (un nombre distinto
+          por marca, para que el Lightbox recorra solo los trabajos de esa marca).
+          · Marca como texto:  <h3 class="brand__name" id="b-focus">Focus Services</h3>
+          · Marca como logo:   <h3 class="brand__name" id="b-focus"><img src="imgs/redes/logo-focus.png" alt="Focus Services"></h3>
+          · Las historias (formato vertical) llevan class="gallery gallery--stories".
+            Si los trabajos son horizontales o cuadrados, usa solo class="gallery".
+        -->
+        <article class="brand" aria-labelledby="b-agricola">
+          <header class="brand__head">
+            <h3 class="brand__name" id="b-agricola">Banco Agricola</h3>
+            <p class="brand__desc">Adaptación de material para nueva campaña de activación de cuenta de ahorro digital. También fue adaptada a formato físico para mopies y vallas publicitarias</p>
+          </header>
+          <ul class="gallery gallery--stories">
+            <li class="work">
+              <a class="work__link" href="imgs/redes/ADS-PPL-1080X1920-0825-01.png" data-lightbox="redes-agricola" aria-label="Ampliar agricola Services, trabajo 01">
+                <img src="imgs/redes/ADS-PPL-1080X1920-0825-01.png" alt="Agricola Services, trabajo 01" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/ADS-PPL-1080X1920-0825-02.png" data-lightbox="redes-agricola" aria-label="Ampliar agricola Services, trabajo 02">
+                <img src="imgs/redes/ADS-PPL-1080X1920-0825-02.png" alt="Agricola Services, trabajo 02" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/CAD-USO-GL-1080X1350-1.png" data-lightbox="redes-agricola" aria-label="Ampliar agricola Services, trabajo 03">
+                <img src="imgs/redes/CAD-USO-GL-1080X1350-1.png" alt="Agricola Services, trabajo 03" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/CAD-USO-GL-1080X1350-2.png" data-lightbox="agricola-focus" aria-label="Ampliar agricola Services, trabajo 01">
+                <img src="imgs/redes/CAD-USO-GL-1080X1350-2.png" alt="Agricola Services, trabajo 04" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/CREDICASH-300X550-SEP25.png" data-lightbox="redes-agricola" aria-label="Ampliar agricola Services, trabajo 01">
+                <img src="imgs/redes/CREDICASH-300X550-SEP25.png" alt="Agricola Services, trabajo 05" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/CREDIPER-300X550-SEP25.png" data-lightbox="redes-agricola" aria-label="Ampliar agricola Services, trabajo 01">
+                <img src="imgs/redes/CREDIPER-300X550-SEP25.png" alt="Agricola Services, trabajo 06" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="brand" aria-labelledby="b-focus">
+          <header class="brand__head">
+            <h3 class="brand__name" id="b-focus">Focus Services</h3>
+            <p class="brand__desc">Creación de contenido para redes sociales formato stories para actividades de interacción en redes, conmemoración de festividades y comunicados generales de la empresa.</p>
+          </header>
+          <ul class="gallery gallery--stories">
+            <li class="work">
+              <a class="work__link" href="imgs/redes/Hello Monday.png" data-lightbox="redes-focus" aria-label="Ampliar Focus Services, trabajo 01">
+                <img src="imgs/redes/Hello Monday.png" alt="Focus Services, trabajo 01" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/MAY_US-Charity.png" data-lightbox="redes-focus" aria-label="Ampliar Focus Services, trabajo 02">
+                <img src="imgs/redes/MAY_US-Charity.png" alt="Focus Services, trabajo 02" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/NOV 1ST - HELLO NOVEMBER.png" data-lightbox="redes-focus" aria-label="Ampliar Focus Services, trabajo 03">
+                <img src="imgs/redes/NOV 1ST - HELLO NOVEMBER.png" alt="Focus Services, trabajo 03" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/NOV 2ND - MAKE TODAY AMAZING.png" data-lightbox="redes-focus" aria-label="Ampliar Focus Services, trabajo 03">
+                <img src="imgs/redes/NOV 2ND - MAKE TODAY AMAZING.png" alt="Focus Services, trabajo 04" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+            <li class="work">
+              <a class="work__link" href="imgs/redes/Week better.png" data-lightbox="redes-focus" aria-label="Ampliar Focus Services, trabajo 03">
+                <img src="imgs/redes/Week better.png" alt="Focus Services, trabajo 05" loading="lazy" decoding="async">
+                <div class="card-hover-overlay" aria-hidden="true"></div>
+              </a>
+            </li>
+          </ul>
+        </article>
+
       </section>
       </div>
       </div>
