@@ -339,6 +339,10 @@ img { display: block; max-width: 100%; }
 /* Historias verticales (9:16): marcos altos para que la obra no quede pequeña */
 .gallery--stories { --max: 300px; }
 .gallery--stories .work__link { --ratio: 9 / 16; }
+/* Branding: imágenes horizontales, filas de 2 (1 columna en móvil) */
+.gallery--wide { grid-template-columns: minmax(0, 1fr); --max: none; }
+@media (min-width: 600px) { .gallery--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.gallery--wide .work .work__link { --ratio: 16 / 10; }   /* misma proporción en todas, la obra se ve completa */
 @media (max-width: 760px) {
   .brand__head { grid-template-columns: minmax(0, 1fr); }
 }
