@@ -71,6 +71,44 @@ img { display: block; max-width: 100%; }
 .glow--teal    { background: radial-gradient(closest-side, rgba(var(--teal), .26), transparent 100%); }
 .bg.is-live .glow { opacity: 1; }
 
+/* Cubo 3D multicolor que rebota (vive dentro de .bg: persistente, detrás del contenido, sin capturar clics) */
+@property --cube-h { syntax: '<number>'; inherits: true; initial-value: 285; }  /* tono base; cambia en cada rebote */
+.cube-wrap {
+  --cube: clamp(110px, 23vmin, 260px);       /* tamaño del cubo */
+  --cube-h: 285;
+  position: absolute; left: 0; top: 0;
+  width: var(--cube); height: var(--cube);
+  perspective: 800px;
+  opacity: .75;
+  transition: --cube-h 1s ease;             /* el color cambia suavemente al rebotar */
+  will-change: transform;
+}
+.cube {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(-25deg) rotateY(35deg);        /* pose fija si se reduce el movimiento */
+  animation: cube-spin 24s linear infinite;
+}
+@keyframes cube-spin {
+  from { transform: rotateX(-25deg) rotateY(0deg) rotateZ(0deg); }
+  to   { transform: rotateX(335deg) rotateY(360deg) rotateZ(360deg); }
+}
+/* Cada cara tiene un color distinto (desfase de tono = multicolor) */
+.cube__face {
+  --o: 0;
+  position: absolute; inset: 0; border-radius: 6px;
+  border: 3px solid hsl(calc(var(--cube-h) + var(--o)) 95% 64%);
+  background: hsl(calc(var(--cube-h) + var(--o)) 95% 60% / .08);
+  box-shadow: 0 0 18px hsl(calc(var(--cube-h) + var(--o)) 95% 60% / .55),
+              inset 0 0 26px hsl(calc(var(--cube-h) + var(--o)) 95% 60% / .35);
+}
+.cube__face--front  { --o: 0;   transform: translateZ(calc(var(--cube) / 2)); }
+.cube__face--back   { --o: 180; transform: rotateY(180deg) translateZ(calc(var(--cube) / 2)); }
+.cube__face--right  { --o: 60;  transform: rotateY(90deg)  translateZ(calc(var(--cube) / 2)); }
+.cube__face--left   { --o: 240; transform: rotateY(-90deg) translateZ(calc(var(--cube) / 2)); }
+.cube__face--top    { --o: 120; transform: rotateX(90deg)  translateZ(calc(var(--cube) / 2)); }
+.cube__face--bottom { --o: 300; transform: rotateX(-90deg) translateZ(calc(var(--cube) / 2)); }
+
 /* Móvil / táctil: sin seguimiento, deriva lenta y suave */
 @media not all and (hover: hover) and (pointer: fine) {
   .glow { display: none; }

@@ -3,6 +3,7 @@
    1) Luz de fondo que sigue al cursor (rAF + interpolación)
    2) Navegación de página única con transiciones
    3) Galería de TRABAJOS + integración del Lightbox original
+   4) Cubo 3D multicolor que rebota por la pantalla
    ========================================================== */
 (() => {
   'use strict';
@@ -200,5 +201,52 @@
       }).observe(overlay, { attributes: true, attributeFilter: ['style'] });
     }
     });
+  }
+
+  /* ---------- 4. Cubo 3D que rebota ---------- */
+  // El giro 3D lo hace CSS (transform, en la GPU). Aquí solo se mueve el contenedor
+  // con requestAnimationFrame y se cambia el tono de color en cada rebote.
+  const cube = $('.cube-wrap');
+  if (cube) {
+    const vw = () => window.innerWidth;
+    const vh = () => window.innerHeight;
+    let S = cube.offsetWidth;                          // tamaño actual del cubo
+    let x = vw() * 0.62, y = vh() * 0.22;
+    const speed = Math.min(vw(), vh()) * 0.12;         // px/s, proporcional a la pantalla
+    let vx = speed, vy = speed * 0.7;
+    let hue = 285, last = 0;
+
+    const place = () => { cube.style.transform = `translate3d(${x}px, ${y}px, 0)`; };
+    const bounds = () => {                             // margen para que el cubo girando no se corte
+      const m = S * 0.22;
+      return { minX: m, minY: m, maxX: Math.max(m, vw() - S - m), maxY: Math.max(m, vh() - S - m) };
+    };
+    place();
+
+    if (!reduceMotion.matches) {
+      const step = (t) => {
+        const dt = Math.min((t - last) / 1000, 0.05);  // evita saltos al volver a la pestaña
+        last = t;
+        const b = bounds();
+        let hit = false;
+        x += vx * dt; y += vy * dt;
+        if (x <= b.minX)      { x = b.minX; vx =  Math.abs(vx); hit = true; }
+        else if (x >= b.maxX) { x = b.maxX; vx = -Math.abs(vx); hit = true; }
+        if (y <= b.minY)      { y = b.minY; vy =  Math.abs(vy); hit = true; }
+        else if (y >= b.maxY) { y = b.maxY; vy = -Math.abs(vy); hit = true; }
+        if (hit) { hue += 55; cube.style.setProperty('--cube-h', hue); }   // cambia de color al rebotar
+        place();
+        requestAnimationFrame(step);
+      };
+      requestAnimationFrame((t) => { last = t; requestAnimationFrame(step); });
+    }
+
+    window.addEventListener('resize', () => {
+      S = cube.offsetWidth;
+      const b = bounds();
+      x = Math.min(Math.max(x, b.minX), b.maxX);
+      y = Math.min(Math.max(y, b.minY), b.maxY);
+      place();
+    }, { passive: true });
   }
 })();
